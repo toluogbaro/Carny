@@ -55,7 +55,7 @@ public class WRK_Jump : MonoBehaviour
     {
         RaycastHit raycastHit;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(0, -1f, 0), out raycastHit, 2f))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(0, -1f, 0), out raycastHit, 1.5f))
         {
             isGrounded = true;
 
@@ -96,7 +96,7 @@ public class WRK_Jump : MonoBehaviour
 
         if (holdJumpRequest && jumpTimer > 0)
         {
-            jumpRB.AddForce((jumpDirection * holdJumpHeight) * Time.fixedDeltaTime, ForceMode.Impulse);
+            jumpRB.AddForce((jumpDirection * holdJumpHeight) * Time.fixedDeltaTime, ForceMode.Force);
             jumpTimer -= Time.deltaTime;
             jumpRequest = false;
 

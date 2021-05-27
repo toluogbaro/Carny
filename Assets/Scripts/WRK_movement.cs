@@ -11,8 +11,9 @@ public class WRK_movement : MonoBehaviour
     [SerializeField]
     Transform cam, player;
     Rigidbody rb;
-    
 
+    bool isGrounded;
+    bool jumpReq;
 
     private void Awake()
     {
@@ -30,13 +31,14 @@ public class WRK_movement : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
-        
+        JumpyPhys();
     }
 
     private void LateUpdate()
     {
         
         Mousey();
+        Jumpy();
     }
 
 
@@ -47,6 +49,7 @@ public class WRK_movement : MonoBehaviour
 
         Vector3 moveDirection = new Vector3(h, 0, v);
         Vector3 moveVector = (transform.forward * moveDirection.z) + (transform.right * moveDirection.x);
+        moveVector = Vector3.ClampMagnitude(moveVector, 1);
 
         rb.velocity = new Vector3(moveVector.x * speed, moveVector.y, moveVector.z * speed);
 
@@ -69,7 +72,42 @@ public class WRK_movement : MonoBehaviour
         cam.rotation = lookRotation;
     }
 
+    private void Jumpy()
+    {
+        RaycastHit hit;
+        
 
+        if(Physics.Raycast(transform.position, transform.TransformDirection(0, -1f, 0), out hit, 2f))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpReq = true;
+        }
+        else
+        {
+            rb.AddForce(Physics.gravity, ForceMode.Acceleration);
+        }
+        
+    }
+
+    private void JumpyPhys()
+    {
+       if(jumpReq)
+       {
+            rb.AddForce(transform.up *= 200, ForceMode.Impulse);
+            rb.drag = 0.5f;
+
+            jumpReq = false;
+       }
+      
+    }
 
 
  
