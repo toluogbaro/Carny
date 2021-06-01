@@ -265,7 +265,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 030a88a4768e3064d9051a0d18ce99df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -495,12 +495,12 @@ GameObject:
   - component: {fileID: 1331234522}
   - component: {fileID: 1331234521}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: TPS Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1331234521
 AudioListener:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331234520}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1331234522
 Camera:
   m_ObjectHideFlags: 0
@@ -610,6 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 2982855640564750632, guid: 79857248668e63543b922e449da745a1, type: 3}
+  bullets: []
 --- !u!1 &1480303540
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,9 +662,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rotationSpeed: 2
+  tpsRotationSpeed: 5
   worldAngles: {x: -2, y: 2}
-  cam: {fileID: 963194228}
-  player: {fileID: 1480303546}
+  tpsWorldAngles: {x: 0, y: 0}
+  mainCam: {fileID: 963194228}
+  tpsCam: {fileID: 1331234523}
+  switchCamera: 9
+  switches: 0
 --- !u!65 &1480303543
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -790,7 +795,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 030a88a4768e3064d9051a0d18ce99df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

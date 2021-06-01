@@ -5,27 +5,29 @@ using UnityEngine;
 public class WRK_movement : MonoBehaviour
 {
     [SerializeField]
-    float speed, rotationSpeed;
+    float speed, rotationSpeed, tpsRotationSpeed;
     [SerializeField]
-    Vector2 worldAngles;
+    Vector2 worldAngles, tpsWorldAngles;
     [SerializeField]
-    Transform cam, player;
+    Transform mainCam, tpsCam;
     Rigidbody rb;
+    [SerializeField]
+    KeyCode switchCamera = KeyCode.None;
+    bool isGrounded, jumpReq;
 
-    bool isGrounded;
-    bool jumpReq;
+    public int switches;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        cam = GetComponentInChildren<Camera>().transform;
+        switches = 1;
 
-        Cursor.lockState = CursorLockMode.Confined;
+        
     }
 
     private void Update()
     {
-        
+        ChangeCam();
     }
 
     private void FixedUpdate()
@@ -53,7 +55,7 @@ public class WRK_movement : MonoBehaviour
 
         rb.velocity = new Vector3(moveVector.x * speed, moveVector.y, moveVector.z * speed);
 
-        var camRot = cam.eulerAngles;
+        var camRot = mainCam.eulerAngles;
 
         transform.rotation = Quaternion.Euler(0, camRot.y, 0);
     }
@@ -66,10 +68,49 @@ public class WRK_movement : MonoBehaviour
         if (input.x < -e || input.x > e || input.y < -e || input.y > e)
         {
             worldAngles += rotationSpeed * input;
+            tpsWorldAngles += tpsRotationSpeed * input;
         }
 
         Quaternion lookRotation = Quaternion.Euler(worldAngles);
-        cam.rotation = lookRotation;
+        Quaternion tpsLookRotation = Quaternion.Euler(tpsWorldAngles);
+        mainCam.rotation = lookRotation;
+        tpsCam.rotation = tpsLookRotation;
+
+
+    }
+
+    private void ChangeCam()
+    {
+        
+
+        if (Input.GetKeyDown(switchCamera))
+        {
+            Debug.Log("Switch");
+            
+            if(switches == 1)
+            {
+                switches++; 
+            }
+            else
+            {
+                switches--;
+            }
+
+           
+           
+        }
+
+        if (switches == 1)
+        {
+            mainCam.gameObject.SetActive(true);
+            tpsCam.gameObject.SetActive(false);
+
+        }
+        else if (switches == 2)
+        {
+            mainCam.gameObject.SetActive(false); ;
+            tpsCam.gameObject.SetActive(true);
+        }
     }
 
     private void Jumpy()
